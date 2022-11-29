@@ -1,0 +1,117 @@
+let a1 = [1, 2, 3];
+let b1 = [2, 1, 3];
+
+let a2 = [1, 2, 2];
+let b2 = [2, 1, 1];
+
+let a3 = [1, 2, 3];
+let b3 = [1, 2, 3];
+
+let a4 = [1, 2, 1, 2];
+let b4 = [2, 2, 1, 1];
+
+let a5 = [1,2,3,4];
+
+
+function swapCheck(a,b){
+  for (let i = 0; i < a.length; i++){
+    for (let j = 0; j < b.length; j++){
+      if (areEqual(a,b) === true){
+        return true;
+      }
+      let combos = testArray(a);
+      for (let k = 0; k < combos.length; k++){
+        if (areEqual(combos[k],b) === true){
+          return true;
+        } 
+      }
+    }
+  }
+  return false;
+}
+
+//console.log(swapCheck(a4,b4));
+
+
+//// help functions below!!!
+
+function testArray(array){
+  let testArrays = [];
+  let testArr = [];
+  
+  for (let i = 0; i < array.length; i++){
+    for (let j = 0; j < array.length; j++){
+      
+      //console.log('hgfjhkdhgfkdlshgfkjhgjhfkjg');
+      
+      if (j !== i){
+        
+        testArr.push(array[j]);   // 2
+        testArr.push(array[i]);   // 1
+        
+        let startElements = [];
+        let midElements = [];
+        
+        for (let k = 0; k < array.length; k++){
+          //console.log(array[j], array[i], array[k]);
+          if (k !== j && k !== i){
+            if (k > j && k > i){
+              testArr.push(array[k]); // end
+              //console.log( startElements, midElements, testArr, array[k], 'end');
+            }
+            if (k < j && k < i){
+              startElements.push(array[k]); // start
+              //console.log( startElements, midElements, testArr, array[k], 'start');
+            }
+            if ( (k < j && k > i) || (k > j && k < i) ){
+              midElements.push(array[k]); //middle
+              //console.log( startElements, midElements, testArr, array[k], 'middle');
+            }
+          }
+        }
+        // turn startElements and midElements into strings
+        
+        let finalStartElements = startElements.toString();
+        let finalMidElements = midElements.toString();
+        
+        testArr.unshift(finalStartElements); // adds starting elements to testArr       
+        testArr.splice(j, 0, finalMidElements);    // add middle elements to testArr
+        
+        let testArrayReady = allNumbers(testArr);
+        
+        let finalArray = testArrayReady.filter(function (value) {
+          return !Number.isNaN(value);
+        });
+
+        if (areEqual(array, finalArray) !== true){
+            testArrays.push(finalArray);
+        }
+        testArr = [];
+        finalArray = [];
+        }
+      }
+    }
+  return testArrays;
+};
+
+testArray(a5);
+//console.log(testArray(a5));
+
+// testAray works but prints out extra copies of already printed combinations!
+// initial array is NOT pushed because of line 554
+
+function areEqual(array1,array2){
+  for (let i = 0; i < array1.length; i++){
+    for (let j = 0; j < array2.length; j++){
+      if (array1[i] !== array2[i]){
+        return false;
+      }
+    }
+  }
+  return true;
+}
+
+function allNumbers(array){
+  let s = array.map(x => parseInt(x) );
+  return s;
+}
