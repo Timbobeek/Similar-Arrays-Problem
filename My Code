@@ -52,6 +52,8 @@ function testArray(array){
         let startElements = [];
         let midElements = [];
         
+        // I BELIEVE THE PROBLEM STARTS HERE
+        
         for (let k = 0; k < array.length; k++){
           //console.log(array[j], array[i], array[k]);
           if (k !== j && k !== i){
@@ -68,6 +70,8 @@ function testArray(array){
               //console.log( startElements, midElements, testArr, array[k], 'middle');
             }
           }
+          
+          // AND ENDS HERE
         }
         // turn startElements and midElements into strings
         
